@@ -344,8 +344,8 @@ public class RobertDaronChuckGroupProject extends Application {
         });
         exitButton.setOnAction(a->{
         	
-        	boolean answer =  ConfirmBox.confirm("Exit the program?", "Are you sure you want \n"
-					+ "to exit the program?");
+        	boolean answer =  ConfirmBox.confirm("Exit the program?", " Are you sure you want "
+					+ "to exit the program? Your progress will not be saved. ");
 			if (answer == true)
             pStage.close();
         });
