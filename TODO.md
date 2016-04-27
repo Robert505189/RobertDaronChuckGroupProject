@@ -6,13 +6,38 @@ getName() <strong>done - Robert</strong>
 getDateTime() <strong>done - Robert</strong>
 
 getAirFare() TODO: 
-              Will throw number format exception if Empty
+            will throw number format exception if empty (OTHER TODO item 1 will fix this issue)
                    
-              Regex contained in NumberTextField.java allows for multiple digits past decimal place ex "75.859999999"
+            Regex contained in NumberTextField.java allows for multiple digits past decimal place ex "75.859999999"
               
-              see other TODO Item 1
+            see OTHER TODO Item 1
+            
+            see OTHER TODO Item 2
+            
+getCarFees() TODO:
+              Text Fields, buttons, and labels need to be placed in to a grid frame for proper
+              alignment see the getMeals method code between: //charge frame and //end charge frame
+              use this as a template to create the grid frame don't use the navbox portion this method
+              
+              see OTHER TODO Item 1
+              
+              see OTHER TODO Item 2
+              
 
+getHotelRegFees() TODO
+              Text Fields, buttons, and labels need to be placed in to a grid frame for proper
+              alignment see the getMeals method code between: //charge frame and //end charge frame
+              use this as a template to create the grid frame don't use the navbox portion this method
+              
+              see OTHER TODO Item 1
+              
+              see OTHER TODO Item 2
+              
 
+getMeals() TODO ---> This is Robert's problem dont Touch
+              
+              
+                  
               
 
               
@@ -23,3 +48,11 @@ getAirFare() TODO:
 is skipped by the user 00.00 is used automatically this will give a similar effet as the prompt
 text ,but also do the job of initialzing our variable with a 00 amount with out the user having to do
 extra steps.
+
+2) Make sure all nextButton.setOnAction calls set variables and make sure all text fields make use of NumbertTextField.java
+  along with an updated regex to ensure proper number formating
+
+3)Remove duplicate commenting
+
+4)Create new method for writing and displaying the file as well as performing all calculations and displaying the Data
+
