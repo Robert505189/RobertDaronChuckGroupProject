@@ -93,9 +93,9 @@ public class RobertDaronChuckGroupProject extends Application {
         boolean lunchR_Day = false;
         boolean dinnerR_Day = false;
         int coveredMeals;
-        ArrayList<String> breakfastArray = new ArrayList<>();
-        ArrayList<String> lunchArray = new ArrayList<>();
-        ArrayList<String> dinnerArray = new ArrayList<>();
+        ArrayList<Double> breakfastArray = new ArrayList<>();
+        ArrayList<Double> lunchArray = new ArrayList<>();
+        ArrayList<Double> dinnerArray = new ArrayList<>();
         float totalCabFare = 0.0f;
         float totalPersonalMiles = 0.0f;
         float totalRentalFees = 0.0f;
@@ -347,7 +347,6 @@ public class RobertDaronChuckGroupProject extends Application {
         nextButton.setOnAction(a->
         {
             getName();
-            //getMeals();
         });
         
         
@@ -481,7 +480,7 @@ public class RobertDaronChuckGroupProject extends Application {
                 prompt.setFill(Paint.valueOf("RED"));
             }
             else
-                getAirfare();
+                getDateTime();
         
         });
         
@@ -1030,8 +1029,10 @@ public class RobertDaronChuckGroupProject extends Application {
         
         //end charge frame
         
-        //setTextfield values to zero
-        
+        //costs setTextfield values to 00.00
+        cost1.setText("00.00");
+        cost2.setText("00.00");
+        cost3.setText("00.00");
         
         
         //add values to the array
@@ -1041,20 +1042,20 @@ public class RobertDaronChuckGroupProject extends Application {
            {//do stuff first on next
                 /*Safe to do stuff Here */
                 if (cost1.getText().isEmpty())
-                    breakfastArray.add(index.intValue(),"00.00");
+                    breakfastArray.add(index.intValue(),00.00);
                 else
-                   breakfastArray.add(index.intValue(),cost1.textProperty().getValueSafe());
+                   breakfastArray.add(index.intValue(),Double.parseDouble(cost1.textProperty().getValueSafe()));
                 if (cost2.getText().isEmpty())
-                    lunchArray.add(index.intValue(),"00.00");
+                    lunchArray.add(index.intValue(),00.00);
                 else
-                lunchArray.add(index.intValue(),cost2.textProperty().getValueSafe());
+                lunchArray.add(index.intValue(),Double.parseDouble(cost2.textProperty().getValueSafe()));
                 if  (cost3.getText().isEmpty())
-                    dinnerArray.add(index.intValue(),"00.00");
+                    dinnerArray.add(index.intValue(),00.00);
                 else
-                dinnerArray.add(index.intValue(),cost3.textProperty().getValueSafe());
-                cost1.setText("");
-                cost2.setText("");
-                cost3.setText("");
+                dinnerArray.add(index.intValue(),Double.parseDouble(cost1.textProperty().getValueSafe()));
+                cost1.setText("00.00");
+                cost2.setText("00.00");
+                cost3.setText("00.00");
                
                
                 /*Stop doing stuff Here */
@@ -1110,19 +1111,19 @@ public class RobertDaronChuckGroupProject extends Application {
         
         nextButton.setOnAction(a->{
             
-            //save final meal values to array
+            //save meal values to array
             if (cost1.getText().isEmpty())
-                    breakfastArray.add(travelDates.size()-1,"00.00");
+                    breakfastArray.add(travelDates.size()-1,00.00);
                 else
-                   breakfastArray.add(travelDates.size()-1,cost1.textProperty().getValueSafe());
+                   breakfastArray.add(travelDates.size()-1,Double.parseDouble(cost1.textProperty().getValueSafe()));
                 if (cost2.getText().isEmpty())
-                    lunchArray.add(travelDates.size()-1,"00.00");
+                    lunchArray.add(travelDates.size()-1,00.00);
                 else
-                lunchArray.add(travelDates.size()-1,cost2.textProperty().getValueSafe());
+                lunchArray.add(travelDates.size()-1,Double.parseDouble(cost2.textProperty().getValueSafe()));
                 if  (cost3.getText().isEmpty())
-                    dinnerArray.add(travelDates.size()-1,"00.00");
+                    dinnerArray.add(travelDates.size()-1,00.00);
                 else
-                dinnerArray.add(travelDates.size()-1,cost3.textProperty().getValueSafe());
+                dinnerArray.add(travelDates.size()-1,Double.parseDouble(cost3.textProperty().getValueSafe()));
             //call print to file or something
             
         });
