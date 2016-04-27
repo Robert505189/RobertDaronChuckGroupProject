@@ -50,6 +50,10 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
+import static javafx.application.Application.launch;
+import static javafx.application.Application.launch;
+import static javafx.application.Application.launch;
+import javafx.scene.control.Tooltip;
 /**
  *Rough Group project
  *Robert's version
@@ -81,7 +85,7 @@ public class RobertDaronChuckGroupProject extends Application {
         
         //Business trip data
         SimpleStringProperty name = new SimpleStringProperty();
-        long tripDays;
+        long tripDays;//THIS MUST BE LONG
         ArrayList<LocalDate> travelDates = new ArrayList<>();
         LocalDateTime departDT;
         LocalDateTime returnDT;
@@ -92,7 +96,6 @@ public class RobertDaronChuckGroupProject extends Application {
         boolean breakfastR_Day = false;
         boolean lunchR_Day = false;
         boolean dinnerR_Day = false;
-        int coveredMeals;
         ArrayList<Double> breakfastArray = new ArrayList<>();
         ArrayList<Double> lunchArray = new ArrayList<>();
         ArrayList<Double> dinnerArray = new ArrayList<>();
@@ -949,7 +952,8 @@ public class RobertDaronChuckGroupProject extends Application {
         Button nextButton = nextButton();
         Button backButton = backButton();
         Button exitButton = exitButton();
-        
+        //disable focus nextButton until all meal values confirmed
+        nextButton.setDisable(true);
         
         //set a group to hold nodes
         Group root = new Group();
@@ -957,6 +961,7 @@ public class RobertDaronChuckGroupProject extends Application {
         //load image set to imageview
         Image picture = new Image("meal800x400.png");
         ImageView iv = new ImageView(picture);
+        StackPane spScene7 = new StackPane(iv);
         
         VBox outerVB = new VBox(40);
         outerVB.setPadding(new Insets(10));
@@ -1018,10 +1023,12 @@ public class RobertDaronChuckGroupProject extends Application {
         
         HBox navBox = new HBox();
         navBox.setSpacing(20);
-        Button next = new Button("Next Day");
-        Button back = new Button("Previous Day");
+        Button nextDay = new Button("Next Day");
+        Button backDay = new Button("Previous Day");
+        if (tripDays == 1)
+            backDay.setDisable(true);
         
-        navBox.getChildren().addAll(back,next);
+        navBox.getChildren().addAll(backDay,nextDay);
         
         mainBox.setSpacing(10);
         mainBox.getChildren().addAll(date,chargeGrid,navBox);
@@ -1029,50 +1036,84 @@ public class RobertDaronChuckGroupProject extends Application {
         //end charge frame
         
         //costs setTextfield values to 00.00
-        cost1.setText("00.00");
-        cost2.setText("00.00");
-        cost3.setText("00.00");
+        cost1.setText("0.0");
+        cost2.setText("0.0");
+        cost3.setText("0.0");
         
         
         //add values to the array
-        next.setOnAction(a->{
+        nextDay.setOnAction(a->{
+           //confirm boolean
+           boolean answer = false;
            //Check bounds are safe before doing stuff
            if(index.intValue() < travelDates.size()-1)
-           {//do stuff first on next
+           {//do stuff first on nextDay
                 /*Safe to do stuff Here */
                 if (cost1.getText().isEmpty())
-                    breakfastArray.add(index.intValue(),00.00);
+                    breakfastArray.add(index.intValue(),0.00);
                 else
                    breakfastArray.add(index.intValue(),Double.parseDouble(cost1.textProperty().getValueSafe()));
                 if (cost2.getText().isEmpty())
-                    lunchArray.add(index.intValue(),00.00);
+                    lunchArray.add(index.intValue(),0.00);
                 else
                 lunchArray.add(index.intValue(),Double.parseDouble(cost2.textProperty().getValueSafe()));
                 if  (cost3.getText().isEmpty())
-                    dinnerArray.add(index.intValue(),00.00);
+                    dinnerArray.add(index.intValue(),0.00);
                 else
                 dinnerArray.add(index.intValue(),Double.parseDouble(cost1.textProperty().getValueSafe()));
-                cost1.setText("00.00");
-                cost2.setText("00.00");
-                cost3.setText("00.00");
+                cost1.setText("0.0");
+                cost2.setText("0.0");
+                cost3.setText("0.0");
                
                
                 /*Stop doing stuff Here */
                 /*   Then Increment     */   
                 index.set((index.intValue() + 1));
                 date.setText(travelDates.get(index.intValue()).toString());
+                //change button label
+                if(index.intValue() == travelDates.size()-1)
+                {
+                    nextDay.setText("Confirm");
+                }
+                
            }
            else
-               AlertBox.alert("Hey","This is the last day of your trip!"); 
+           {
             
+                answer =  ConfirmBox.confirm("Meals","Are you done entering your meal costs?");
+                if (answer)
+                {
+                    if (cost1.getText().isEmpty())
+                        breakfastArray.add(index.intValue(),0.00);
+                    else
+                        breakfastArray.add(index.intValue(),Double.parseDouble(cost1.textProperty().getValueSafe()));
+                    if (cost2.getText().isEmpty())
+                        lunchArray.add(index.intValue(),0.00);
+                    else
+                        lunchArray.add(index.intValue(),Double.parseDouble(cost2.textProperty().getValueSafe()));
+                    if  (cost3.getText().isEmpty())
+                        dinnerArray.add(index.intValue(),0.00);
+                    else
+                        dinnerArray.add(index.intValue(),Double.parseDouble(cost1.textProperty().getValueSafe())); 
+
+                    //enable nextButton
+                    nextButton.setDisable(false);
+                    Image picture2 = new Image("flag800x400.png");
+                    ImageView iv2 = new ImageView(picture2);
+                    spScene7.getChildren().add(iv2);
+                    
+
+                }
+               
+           }
         });
         
         
         //change values on the array
-        back.setOnAction(a->{
+        backDay.setOnAction(a->{
            //check bounds are safe before doing stuff
            if (index.intValue() != 0)
-           {//decrement first on back
+           {//decrement first on backDay
                /*   Then decrement     */
                 index.set((index.intValue() - 1));
                 date.setText(travelDates.get(index.intValue()).toString());
@@ -1080,7 +1121,8 @@ public class RobertDaronChuckGroupProject extends Application {
                 cost1.setText(String.valueOf(breakfastArray.get(index.intValue())));
                 cost2.setText(String.valueOf(lunchArray.get(index.intValue())));
                 cost3.setText(String.valueOf(dinnerArray.get(index.intValue())));
-                
+                //set/revert next day button
+                nextDay.setText("Next Day");
                
                /*Stop doing stuff Here */
            }
@@ -1095,7 +1137,7 @@ public class RobertDaronChuckGroupProject extends Application {
         
    /////////////////////////////////////////////////////////////////
             
-        StackPane spScene7 = new StackPane(iv);
+        
         spScene7.getChildren().addAll(outerVB);
         spScene7.setBackground(Background.EMPTY);
         
@@ -1109,26 +1151,14 @@ public class RobertDaronChuckGroupProject extends Application {
         
         
         nextButton.setOnAction(a->{
-            
-            //save meal values to array
-            if (cost1.getText().isEmpty())
-                    breakfastArray.add(travelDates.size()-1,00.00);
-                else
-                   breakfastArray.add(travelDates.size()-1,Double.parseDouble(cost1.textProperty().getValueSafe()));
-                if (cost2.getText().isEmpty())
-                    lunchArray.add(travelDates.size()-1,00.00);
-                else
-                lunchArray.add(travelDates.size()-1,Double.parseDouble(cost2.textProperty().getValueSafe()));
-                if  (cost3.getText().isEmpty())
-                    dinnerArray.add(travelDates.size()-1,00.00);
-                else
-                dinnerArray.add(travelDates.size()-1,Double.parseDouble(cost3.textProperty().getValueSafe()));
-            //call print to file or something
-            
+            writeToCommand();
         });
         
         backButton.setOnAction(a->{
-            getHotelRegFees();
+            if (nextButton.isDisable())
+                getHotelRegFees();
+            else
+                getMeals();
         });
     }
     
@@ -1225,9 +1255,6 @@ public class RobertDaronChuckGroupProject extends Application {
            dinnerR_Day = true;   
         }
         
-        //calculate non return depart meals
-        coveredMeals = ((int) (tripDays - 1 )* 3);
-        
         
         //populate traveldates array
         //travelDates.add(dDate);
@@ -1254,8 +1281,50 @@ public class RobertDaronChuckGroupProject extends Application {
     }//end dateTimeValid
         
     
-    
-    
+    //temp method to test data
+    void writeToCommand()
+    {
+        System.out.println("Name: " + name.getValueSafe());
+        System.out.println("Today Days of Trip: " + tripDays);
+        System.out.println("DepartDate/Time: " + departDT);
+        System.out.println("DepartTime: "+departTime.getConcatTime() + " Military Equiv: " + departTime.getMilitaryTime() );
+        System.out.println("ReturnDate/Time: " + returnDT);
+        System.out.println("ReturnTime: "+returnTime.getConcatTime() + " Military Equiv: " + returnTime.getMilitaryTime() );
+        System.out.println("Home Time: " + hTime);
+        System.out.println("Depart Meals breakfast, lunch, dinner: " + breakfastD_Day + lunchD_Day +dinnerD_Day);
+        System.out.println("Return Meals breakfast, lunch, dinner: " + breakfastR_Day + lunchR_Day +dinnerR_Day);
+        System.out.println("Cab Fees: "+totalCabFare);
+        System.out.println("Peronal Miles: "+totalPersonalMiles);
+        System.out.println("Rental Car: "+ totalRentalFees);
+        System.out.println("Parking cost: "+ totalParkingFees);
+        System.out.println("Airfare: " + valueAirfare);
+        System.out.println("Hotel costs: "+totalHotelFee);
+        System.out.println("Seminar costs: "+ totalSeminarFee);
+        System.out.println("DISPLAY THE ARRAYS BELOW");
+        System.out.println("Travel Dates Array");
+        for (int i = 0; i < travelDates.size(); i++)
+        {
+            System.out.println(travelDates.get(i).toString());
+        }
+        System.out.println("Note day zero is the index postion and represents depart day or day 1 of trip");
+        System.out.println("Breakfast Array");
+        for (int i = 0; i < breakfastArray.size(); i++)
+        {
+            System.out.println("Day " + i + ": " + breakfastArray.get(i).toString());
+        }
+        
+        System.out.println("Lunch Array");
+        for (int i = 0; i < lunchArray.size(); i++)
+        {
+            System.out.println("Day " + i + ": " + lunchArray.get(i).toString());
+        }
+        
+        System.out.println("Dinner Array");
+        for (int i = 0; i < dinnerArray.size(); i++)
+        {
+            System.out.println("Day " + i + ": " +dinnerArray.get(i).toString());
+        }
+    }
 
     
 }//end class
