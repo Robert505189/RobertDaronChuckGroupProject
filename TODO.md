@@ -1,4 +1,5 @@
-#The TODO List For our project 
+#The TODO List For our project
+#Please append to this file as needed and note when items are completed don't push code that will break other code only push what works with out effecting other parts of the program.
 
 
 getName() <strong>done - Robert</strong>
