@@ -299,10 +299,10 @@ public class RobertDaronChuckGroupProject extends Application {
         
         exitButton.setOnAction(a->{
         	
-        	boolean answer =  ConfirmBox.confirm("Exit the program?", " Are you sure you want "
+            boolean answer =  ConfirmBox.confirm("Exit the program?", " Are you sure you want "
 					+ "to exit the program? Your progress will not be saved. ");
-			if (answer == true)
-            pStage.close();
+            if (answer == true)
+                pStage.close();
         });
         
         
@@ -480,8 +480,8 @@ public class RobertDaronChuckGroupProject extends Application {
                 prompt.setVisible(true);
                 prompt.setFill(Paint.valueOf("RED"));
             }
-            else 
-               getDateTime();
+            else
+                getAirfare();
         
         });
         
@@ -621,7 +621,7 @@ public class RobertDaronChuckGroupProject extends Application {
         spScene4.getChildren().addAll(vb);
         
         //airfare validation
-        TextField airfare = new NumberTextField();  //made a new class to restrict the type of input (only positive integers)
+        TextField airfare = new NumberTextField();  //made a new class to restrict the type of input (only positive intege
         airfare.setPromptText("$0000.00");
         airfare.setMaxWidth(100);
         airfare.setPrefColumnCount(8);
@@ -931,22 +931,14 @@ public class RobertDaronChuckGroupProject extends Application {
 
         
         nextButton.setOnAction(a->{
-
-        	
-
-        	
-
-        	
-        	getMeals();
+                getMeals();
         });
 
         
         backButton.setOnAction(a->{
         	totalHotelFee = 0;
         	totalSeminarFee = 0;
-
-        	
-            getCarFees();
+                getCarFees();
         });
     }
     
@@ -976,7 +968,7 @@ public class RobertDaronChuckGroupProject extends Application {
         
         outerVB.getChildren().addAll(prompt);
         
-        //day/charge frame
+        //charge frame
         
         //array position
         SimpleIntegerProperty index = new SimpleIntegerProperty();
@@ -1033,6 +1025,8 @@ public class RobertDaronChuckGroupProject extends Application {
         
         mainBox.setSpacing(10);
         mainBox.getChildren().addAll(date,chargeGrid,navBox);
+        
+        //end charge frame
         
         //add values to the array
         next.setOnAction(a->{
