@@ -34,7 +34,7 @@ getHotelRegFees() TODO
               see OTHER TODO Item 2
               
 
-getMeals() TODO ---> This is Robert's problem dont Touch
+getMeals() TODO ---> This is Robert's problem don't Touch
               
               
                   
@@ -54,5 +54,7 @@ extra steps.
 
 3)Remove duplicate commenting
 
-4)Create new method for writing and displaying the file as well as performing all calculations and displaying the Data
+4)Create new method for writing and displaying the file as well as performing all calculations and displaying the data. Right now we don't have validated and properly formatted data when this happens the we can perform calculations in the mean time this method can be layed to to: create, open, close the file, display the file the file name should be the value of nameDepartDate"Expenses.txt". The heading and non calculated information can be made with out have the calculated data.
+
+5)Start the word doc to document our project at least template information headins etc.. until we are able to put the other information in like pseudo code, uml test data etc
 
