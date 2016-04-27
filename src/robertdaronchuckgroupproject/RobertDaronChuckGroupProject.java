@@ -297,6 +297,14 @@ public class RobertDaronChuckGroupProject extends Application {
             exitButton.setTranslateX(792);
         });
         
+        exitButton.setOnAction(a->{
+        	
+        	boolean answer =  ConfirmBox.confirm("Exit the program?", " Are you sure you want "
+					+ "to exit the program? Your progress will not be saved. ");
+			if (answer == true)
+            pStage.close();
+        });
+        
         
         return exitButton;
         
@@ -341,13 +349,7 @@ public class RobertDaronChuckGroupProject extends Application {
             getName();
             //getMeals();
         });
-        exitButton.setOnAction(a->{
-        	
-        	boolean answer =  ConfirmBox.confirm("Exit the program?", " Are you sure you want "
-					+ "to exit the program? Your progress will not be saved. ");
-			if (answer == true)
-            pStage.close();
-        });
+        
         
         
     }
@@ -486,16 +488,7 @@ public class RobertDaronChuckGroupProject extends Application {
         backButton.setOnAction(a->{
             getScene1();
         });
-        exitButton.setOnAction(a->{
-        	
-        	boolean answer =  ConfirmBox.confirm("Exit the program?", "Are you sure you want \n"
-					+ "to exit the program?");
-			if (answer == true)
-            pStage.close();
-        });
-        
-        
-  
+
         manageStage(root,scene);
         pStage.setScene(scene);
         pStage.show();
@@ -590,12 +583,7 @@ public class RobertDaronChuckGroupProject extends Application {
         backButton.setOnAction(a ->{
             getName();
         });
-        exitButton.setOnAction(a->{
-        	boolean answer =  ConfirmBox.confirm("Exit the program?", "Are you sure you want \n"
-					+ "to exit the program?");
-			if (answer == true)
-            pStage.close();
-        });
+        
     }
    
     /**
@@ -658,9 +646,6 @@ public class RobertDaronChuckGroupProject extends Application {
         backButton.setOnAction(a->{
             getDateTime();
         });
-        exitButton.setOnAction(a->{
-            pStage.close();
-        });
     }
     
     /**
@@ -674,9 +659,6 @@ public class RobertDaronChuckGroupProject extends Application {
         Button exitButton = exitButton();
         
 
-        
-
-        
         //set a group to hold nodes
         Group root = new Group();
 
@@ -966,12 +948,6 @@ public class RobertDaronChuckGroupProject extends Application {
         	
             getCarFees();
         });
-        exitButton.setOnAction(a->{
-        	boolean answer =  ConfirmBox.confirm("Exit the program?", "Are you sure you want \n"
-					+ "to exit the program?");
-			if (answer == true)
-            pStage.close();
-        });
     }
     
     /**
@@ -1153,12 +1129,6 @@ public class RobertDaronChuckGroupProject extends Application {
         
         backButton.setOnAction(a->{
             getHotelRegFees();
-        });
-        exitButton.setOnAction(a->{
-        	boolean answer =  ConfirmBox.confirm("Exit the program?", "Are you sure you want \n"
-					+ "to exit the program?");
-			if (answer == true)
-            pStage.close();
         });
     }
     
