@@ -968,12 +968,14 @@ public class RobertDaronChuckGroupProject extends Application {
         
         outerVB.getChildren().addAll(prompt);
         
-        //charge frame
+        
         
         //array position
         SimpleIntegerProperty index = new SimpleIntegerProperty();
         index.set(0);
         
+        
+        //charge frame
         GridPane chargeGrid = new GridPane();
         chargeGrid.setHgap(15);
         chargeGrid.setVgap(12);
@@ -1027,6 +1029,10 @@ public class RobertDaronChuckGroupProject extends Application {
         mainBox.getChildren().addAll(date,chargeGrid,navBox);
         
         //end charge frame
+        
+        //setTextfield values to zero
+        
+        
         
         //add values to the array
         next.setOnAction(a->{
