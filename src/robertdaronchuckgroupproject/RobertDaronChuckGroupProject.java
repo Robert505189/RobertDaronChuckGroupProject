@@ -94,13 +94,13 @@ public class RobertDaronChuckGroupProject extends Application {
         ArrayList<Double> breakfastArray = new ArrayList<>();
         ArrayList<Double> lunchArray = new ArrayList<>();
         ArrayList<Double> dinnerArray = new ArrayList<>();
-        float totalCabFare = 0.0f;
-        float totalPersonalMiles = 0.0f;
-        float totalRentalFees = 0.0f;
-        float totalParkingFees = 0.0f;
-        float valueAirfare = 0.0f;
-        float totalHotelFee = 0.0f;
-        float totalSeminarFee = 0.0f;
+        double totalCabFare = 0.0;
+        double totalPersonalMiles = 0.0;
+        double totalRentalFees = 0.0;
+        double totalParkingFees = 0.0;
+        double valueAirfare = 0.0;
+        double totalHotelFee = 0.0;
+        double totalSeminarFee = 0.0;
 
         
         
@@ -618,7 +618,7 @@ public class RobertDaronChuckGroupProject extends Application {
         
         //airfare validation
         TextField airfare = new NumberTextField();  //made a new class to restrict the type of input (only positive intege
-        airfare.setPromptText("$0000.00");
+        airfare.setText("0.00");
         airfare.setMaxWidth(100);
         airfare.setPrefColumnCount(8);
         vb.getChildren().addAll(airfare);
@@ -634,7 +634,7 @@ public class RobertDaronChuckGroupProject extends Application {
         
         nextButton.setOnAction(a->{
         	
-        	valueAirfare = Float.parseFloat(airfare.getText()); //setting our text field to a float
+        	valueAirfare = Double.parseDouble(airfare.getText());
         	
             getCarFees();
         });
@@ -672,19 +672,19 @@ public class RobertDaronChuckGroupProject extends Application {
         text.setFont(Font.font("Helvetica",FontWeight.NORMAL, FontPosture.REGULAR,29));
         text.setFill(Color.ANTIQUEWHITE);
         NumberTextField cabfare = new NumberTextField();  //made a new class to restrict the type of input (only positive integers)
-        cabfare.setPromptText("$0.00");
+        cabfare.setText("0.00");
         cabfare.setMaxWidth(100);
         cabfare.setPrefColumnCount(8);
         NumberTextField personalMiles = new NumberTextField();  //made a new class to restrict the type of input (only positive integers)
-        personalMiles.setPromptText("0");
+        personalMiles.setText("0.00");
         personalMiles.setMaxWidth(100);
         personalMiles.setPrefColumnCount(8);
         NumberTextField rentalFees = new NumberTextField();  //made a new class to restrict the type of input (only positive integers)
-        rentalFees.setPromptText("$0.00");
+        rentalFees.setText("0.00");
         rentalFees.setMaxWidth(100);
         rentalFees.setPrefColumnCount(8);
         NumberTextField parkingFees = new NumberTextField();  //made a new class to restrict the type of input (only positive integers)
-        parkingFees.setPromptText("$0.00");
+        parkingFees.setText("0.00");
         parkingFees.setMaxWidth(100);
         parkingFees.setPrefColumnCount(8);
 
@@ -732,7 +732,7 @@ public class RobertDaronChuckGroupProject extends Application {
         addCabFare.setOnAction(a->{
 
         	
-        totalCabFare += (Float.parseFloat(cabfare.getText()));
+        totalCabFare += (Double.parseDouble(cabfare.getText()));
         cabLabel.setText("Total Cab Fares: " + totalCabFare);
         cabfare.clear();
         });
@@ -744,7 +744,7 @@ public class RobertDaronChuckGroupProject extends Application {
         addPersonalMiles.setOnAction(a->{
 
         	
-        	totalPersonalMiles += (Float.parseFloat(personalMiles.getText()));
+        	totalPersonalMiles += (Double.parseDouble(personalMiles.getText()));
         	personalLabel.setText("Total Personal Miles: " + totalPersonalMiles);
         	personalMiles.clear();
         });
@@ -754,7 +754,7 @@ public class RobertDaronChuckGroupProject extends Application {
         addRentalFees.setOnAction(a->{
 
         	
-        	totalRentalFees += (Float.parseFloat(rentalFees.getText()));
+        	totalRentalFees += (Double.parseDouble(rentalFees.getText()));
         	rentalLabel.setText("Total Rental Fees: " + totalRentalFees);
         	rentalFees.clear();
         });
@@ -764,7 +764,7 @@ public class RobertDaronChuckGroupProject extends Application {
         addParkingFees.setOnAction(a->{
 
         	
-        	totalParkingFees += (Float.parseFloat(parkingFees.getText()));
+        	totalParkingFees += (Double.parseDouble(parkingFees.getText()));
         	parkingLabel.setText("Total Parking Fees: " + totalParkingFees);
         	parkingFees.clear();
         });
@@ -845,11 +845,11 @@ public class RobertDaronChuckGroupProject extends Application {
         text.setFont(Font.font("Helvetica",FontWeight.NORMAL, FontPosture.REGULAR,29));
         text.setFill(Color.BLACK);
         NumberTextField hotelFee = new NumberTextField();  //made a new class to restrict the type of input (only positive integers)
-        hotelFee.setPromptText("$0.00");
+        hotelFee.setText("0.00");
         hotelFee.setMaxWidth(100);
         hotelFee.setPrefColumnCount(8);
         NumberTextField seminarFee = new NumberTextField();  //made a new class to restrict the type of input (only positive integers)
-        seminarFee.setPromptText("0");
+        seminarFee.setText("0.00");
         seminarFee.setMaxWidth(100);
         seminarFee.setPrefColumnCount(8);
 
@@ -1262,11 +1262,11 @@ public class RobertDaronChuckGroupProject extends Application {
         
         
         //DONT DELETE ROBERT WILL DELETE
-        for (int i = 0; i < travelDates.size(); i++)
-        {
-            System.out.println(travelDates.get(i).toString());
-        }
-        System.out.println(tripDays);
+//        for (int i = 0; i < travelDates.size(); i++)
+//        {
+//            System.out.println(travelDates.get(i).toString());
+//        }
+//        System.out.println(tripDays);
         
       }
 
