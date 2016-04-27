@@ -573,8 +573,7 @@ public class RobertDaronChuckGroupProject extends Application {
                   + "Home time must be after return time.");
         	}else
                 {
-                    //getAirfare();
-                    getMeals();
+                    getAirfare();
                 }
             
         });
@@ -1240,7 +1239,7 @@ public class RobertDaronChuckGroupProject extends Application {
         }
         
         
-        //delete this
+        //DONT DELETE ROBERT WILL DELETE
         for (int i = 0; i < travelDates.size(); i++)
         {
             System.out.println(travelDates.get(i).toString());
