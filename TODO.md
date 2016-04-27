@@ -17,7 +17,7 @@ see OTHER TODO Item 2
 getCarFees() TODO:
 change input to LABEL TEXT FIELD only REMOVE add Button we will only accept a total for the trip
 place in grid pane use code between: //charge frame and //end charge frame in the getMeals()
-as a template to create charge frame grid don't use the navbox portion for this method
+as a template to create charge frame grid, don't use the navbox portion for this method
 
 see OTHER TODO Item 1
 
@@ -27,7 +27,7 @@ see OTHER TODO Item 2
 getHotelRegFees() TODO:
 change input to LABEL TEXT FIELD only REMOVE add Button we will only accept a total for the trip
 place in grid pane use code between: //charge frame and //end charge frame in the getMeals()
-as a template to charge frame grid don't use the navbox portion for this method
+as a template to create charge frame grid, don't use the navbox portion for this method
 
 see OTHER TODO Item 1
 
