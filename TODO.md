@@ -9,14 +9,18 @@ getDateTime() <strong>done - Robert</strong>
 getAirFare() TODO: 
 will throw number format exception if empty (OTHER TODO item 1 will fix this issue)
 Regex contained in NumberTextField.java allows for multiple digits past decimal place ex "75.859999999"
+
 see OTHER TODO Item 1
+
 see OTHER TODO Item 2
             
 getCarFees() TODO:
 Text Fields, buttons, and labels need to be placed in to a grid frame for proper
 alignment see the getMeals method code between: //charge frame and //end charge frame
 use this as a template to create the grid frame don't use the navbox portion this method
+
 see OTHER TODO Item 1
+
 see OTHER TODO Item 2
               
 
@@ -24,7 +28,9 @@ getHotelRegFees() TODO:
 Text Fields, buttons, and labels need to be placed in to a grid frame for proper
 alignment see the getMeals method code between: //charge frame and //end charge frame
 use this as a template to create the grid frame don't use the navbox portion this method
+
 see OTHER TODO Item 1
+
 see OTHER TODO Item 2
               
 
