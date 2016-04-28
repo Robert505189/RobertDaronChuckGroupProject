@@ -16,13 +16,13 @@
 ***
 ***
 ##HIGH PRIORITY
-3. Start the word doc to document our project at least template information headins etc.. until we are able to put the other information in like pseudo code, uml test data etc
+3. Start the word doc to document our project the program is complete enough pseudo can be started
 
 
 ***
 ***
 ##HIGH PRIORITY
-4. TEST TEST TEST!!!! still throw ocassional error
+4. TEST TEST TEST!!!! still throws the ocassional error
 
 ***
 ***
