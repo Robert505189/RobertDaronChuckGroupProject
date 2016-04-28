@@ -1048,17 +1048,20 @@ public class RobertDaronChuckGroupProject extends Application {
                     breakfastArray.add(index.intValue(),0.00);
                 else
                    breakfastArray.add(index.intValue(),Double.parseDouble(cost1.textProperty().getValueSafe()));
-                if (cost2.getText().isEmpty())
+                
+                if(cost2.getText().isEmpty())
                     lunchArray.add(index.intValue(),0.00);
                 else
-                lunchArray.add(index.intValue(),Double.parseDouble(cost2.textProperty().getValueSafe()));
-                if  (cost3.getText().isEmpty())
+                    lunchArray.add(index.intValue(),Double.parseDouble(cost2.textProperty().getValueSafe()));
+                
+                if (cost3.getText().isEmpty())
                     dinnerArray.add(index.intValue(),0.00);
                 else
-                dinnerArray.add(index.intValue(),Double.parseDouble(cost1.textProperty().getValueSafe()));
-                cost1.setText("0.0");
-                cost2.setText("0.0");
-                cost3.setText("0.0");
+                    dinnerArray.add(index.intValue(),Double.parseDouble(cost1.textProperty().getValueSafe()));
+                
+               cost1.setText("0.0");
+               cost2.setText("0.0");
+               cost3.setText("0.0");
                
                
                 /*Stop doing stuff Here */
