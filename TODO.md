@@ -2,7 +2,8 @@
 ##Please append to this file as needed and note when items are completed don't push code that will break other code only push what works with out effecting other parts of the program. The project is nearly done I submited major additions / changes about 0530 this morning  4/28 please see this current to do list to finish.
                
 ***
-***
+
+
 ##HIGH PRIORITY TO ENSURE PROPER CALCS
 1. <strong>*Make sure all nextButton.setOnAction calls set member variables and make sure all text fields make use of NumbertTextField.java along with an updated regex to ensure proper number formating*</strong> most methods should do this except maybe the getcarFees() and getregHotelFees() as I changed these to fit the getMeals() Plese double check each method except the getMeals() as this works how it should and was a major pain to make so please don't change this.
 
