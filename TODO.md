@@ -39,7 +39,7 @@ getHotelRegFees()
 
 1. change input to LABEL TEXT FIELD only REMOVE add Button we will only accept a total for the trip
 place in grid pane use code between: //charge frame and //end charge frame in the getMeals()
-as a template to create charge frame grid, don't use the navbox portion for this method
+as a template to create charge frame grid, don't use the navbox portion for this method <strong>DONE -> Robert</strong>
 
 2. see OTHER TODO Item 1 <strong>DONE -> Robert</strong>
 
@@ -72,9 +72,9 @@ text ,but also do the job of initialzing our variable with a 00 amount with out 
 
 ***
 ***
-4. *Create new method for writing and displaying the file as well as performing all calculations and displaying the data. Right now we don't have validated and properly formatted data when this happens the we can perform calculations in the mean time this method can be layed to to: create, open, close the file, display the file the file name should be the value of nameDepartDate"Expenses.txt". The heading and non calculated information can be made with out have the calculated data.*
+4. Create new method for writing and displaying the file as well as performing all calculations and displaying the data. Right now we don't have validated and properly formatted data when this happens the we can perform calculations in the mean time this method can be layed to to: create, open, close the file, display the file the file name should be the value of nameDepartDate"Expenses.txt". The heading and non calculated information can be made with out have the calculated data.
 
-##Robert is working on this now.
+##DONE -> Robert
 
 
 ***
