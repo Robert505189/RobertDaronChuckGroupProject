@@ -62,25 +62,25 @@ text ,but also do the job of initialzing our variable with a 00 amount with out 
 
 ***
 ***
-2) Make sure all nextButton.setOnAction calls set member variables and make sure all text fields make use of NumbertTextField.java along with an updated regex to ensure proper number formating
+2. Make sure all nextButton.setOnAction calls set member variables and make sure all text fields make use of NumbertTextField.java along with an updated regex to ensure proper number formating
 
 
 ***
 ***
-3)Remove duplicate commenting
+3. Remove duplicate commenting
 
 
 ***
 ***
-4)Create new method for writing and displaying the file as well as performing all calculations and displaying the data. Right now we don't have validated and properly formatted data when this happens the we can perform calculations in the mean time this method can be layed to to: create, open, close the file, display the file the file name should be the value of nameDepartDate"Expenses.txt". The heading and non calculated information can be made with out have the calculated data.
+4. Create new method for writing and displaying the file as well as performing all calculations and displaying the data. Right now we don't have validated and properly formatted data when this happens the we can perform calculations in the mean time this method can be layed to to: create, open, close the file, display the file the file name should be the value of nameDepartDate"Expenses.txt". The heading and non calculated information can be made with out have the calculated data.
 
 
 ***
 ***
-5)Start the word doc to document our project at least template information headins etc.. until we are able to put the other information in like pseudo code, uml test data etc
+5. Start the word doc to document our project at least template information headins etc.. until we are able to put the other information in like pseudo code, uml test data etc
 
 
 ***
 ***
-6)Change all float vars to double change all Float.parseFloat calls to Double.parseDouble accordingly<strong>DONE - Robert</strong>
+6. Change all float vars to double change all Float.parseFloat calls to Double.parseDouble accordingly<strong>DONE - Robert</strong>
 
