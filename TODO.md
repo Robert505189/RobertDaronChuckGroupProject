@@ -5,7 +5,7 @@
 
 
 ##HIGH PRIORITY TO ENSURE PROPER CALCS
-1. <strong>*Make sure all nextButton.setOnAction calls set member variables and make sure all text fields make use of NumbertTextField.java along with an updated regex to ensure proper number formating*</strong> most methods should do this except maybe the getcarFees() and getregHotelFees() as I changed these to fit the getMeals() Plese double check each method except the getMeals() as this works how it should and was a major pain to make so please don't change this.
+1. <strong>*Make sure all nextButton.setOnAction calls set member variables and make sure all text fields make use of NumberTextField.java along with an updated regex to ensure proper number formating*</strong> most methods should do this except maybe the getcarFees() and getHotelRegFees() as I changed these to fit the getMeals() Plese double check each method except the getMeals() as this works how it should and was a major pain to make so please don't change this. Also please make sure all NumberTextField.java Text Fields use .setText("0.00") not .setPrompt() that way if the user wants to skip the input box the 0.00 value is already there with it us having to add it programtically see getAirfare() as an example.
 
 
 ***
@@ -20,7 +20,7 @@
 
 ***
 ##HIGH PRIORITY
-4. TEST TEST TEST!!!! still throws the ocassional error
+4. TEST TEST TEST!!!! still throws the ocassional error, the calculations are done in write file method and were a major pain to write I think they are done correctly but until the FIRST TODO ITEM IS COMPLETE THESE CALCS MAY NOT WORK PROPERLY
 
 ***
 ##MEDIUM PRIORITY
