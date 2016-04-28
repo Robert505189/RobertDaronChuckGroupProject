@@ -1,10 +1,16 @@
 package robertdaronchuckgroupproject;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javafx.animation.FadeTransition;
 import javafx.animation.Interpolator;
@@ -26,6 +32,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.effect.GaussianBlur;
@@ -94,13 +101,21 @@ public class RobertDaronChuckGroupProject extends Application {
         ArrayList<Double> breakfastArray = new ArrayList<>();
         ArrayList<Double> lunchArray = new ArrayList<>();
         ArrayList<Double> dinnerArray = new ArrayList<>();
-        double totalCabFare = 0.0;
-        double totalPersonalMiles = 0.0;
-        double totalRentalFees = 0.0;
-        double totalParkingFees = 0.0;
-        double valueAirfare = 0.0;
-        double totalHotelFee = 0.0;
-        double totalSeminarFee = 0.0;
+        double cabFees = 0.0;
+        int milesDriven = 0;
+        double rentalFees = 0.0;
+        double parkingFees = 0.0;
+        double airfareFee = 0.0;
+        double hotelFees = 0.0;
+        double regFees = 0.0;
+        //covered Constants
+        final double PARK = 7.0;
+        final double TAXI = 12.0;
+        final double HOTEL = 99.0;
+        final double B_FAST = 9.0;
+        final double LUNCH = 12.0;
+        final double DINNER = 16.0;
+        final double MILES = 0.54;
 
         
         
@@ -634,7 +649,7 @@ public class RobertDaronChuckGroupProject extends Application {
         
         nextButton.setOnAction(a->{
         	
-        	valueAirfare = Double.parseDouble(airfare.getText());
+        	airfareFee = Double.parseDouble(airfare.getText());
         	
             getCarFees();
         });
@@ -662,124 +677,76 @@ public class RobertDaronChuckGroupProject extends Application {
         //load image set to imageview
         Image picture = new Image("taxi800x400.png");
         ImageView iv = new ImageView(picture);
+        
+        StackPane spScene5 = new StackPane(iv);
 
         
-        VBox vb = new VBox(15);
+        VBox vb = new VBox(40);
         vb.setPadding(new Insets(10));
 
         
-        Text text = new Text("Please enter all of your car fees");
-        text.setFont(Font.font("Helvetica",FontWeight.NORMAL, FontPosture.REGULAR,29));
-        text.setFill(Color.ANTIQUEWHITE);
-        NumberTextField cabfare = new NumberTextField();  //made a new class to restrict the type of input (only positive integers)
-        cabfare.setText("0.00");
-        cabfare.setMaxWidth(100);
-        cabfare.setPrefColumnCount(8);
-        NumberTextField personalMiles = new NumberTextField();  //made a new class to restrict the type of input (only positive integers)
-        personalMiles.setText("0.00");
-        personalMiles.setMaxWidth(100);
-        personalMiles.setPrefColumnCount(8);
-        NumberTextField rentalFees = new NumberTextField();  //made a new class to restrict the type of input (only positive integers)
-        rentalFees.setText("0.00");
-        rentalFees.setMaxWidth(100);
-        rentalFees.setPrefColumnCount(8);
-        NumberTextField parkingFees = new NumberTextField();  //made a new class to restrict the type of input (only positive integers)
-        parkingFees.setText("0.00");
-        parkingFees.setMaxWidth(100);
-        parkingFees.setPrefColumnCount(8);
+        Text prompt = new Text("Please enter all of your car fees");
+        prompt.setFont(Font.font("Helvetica",FontWeight.NORMAL, FontPosture.REGULAR,29));
+        prompt.setFill(Color.ANTIQUEWHITE);
 
         
-        vb.getChildren().addAll(text, cabfare, personalMiles, rentalFees, parkingFees);
-
+        vb.getChildren().addAll(prompt);
         
-        VBox labels = new VBox(15);
-        labels.setPadding(new Insets(10));
-        labels.setTranslateX(150);
-        labels.setTranslateY(45);
-        labels.setMaxWidth(600);
-        Label cabLabel = new Label("Total Cab Fares:");
-        cabLabel.setTextFill(Color.ANTIQUEWHITE);
-        cabLabel.setFont(Font.font("Helvetica",FontWeight.NORMAL, FontPosture.REGULAR,29));
-
-       
-        Label personalLabel = new Label("Total Personal Miles");
-        personalLabel.setFont(Font.font("Helvetica",FontWeight.NORMAL, FontPosture.REGULAR,29));
-
+        //charge frame
+        GridPane chargeGrid = new GridPane();
+        chargeGrid.setHgap(15);
+        chargeGrid.setVgap(12);
+        ObservableList<Node> content = chargeGrid.getChildren();
         
-        personalLabel.setTextFill(Color.ANTIQUEWHITE);
-        Label rentalLabel = new Label("Total Rental Fees");
-        rentalLabel.setFont(Font.font("Helvetica",FontWeight.NORMAL, FontPosture.REGULAR,29));
-
+        VBox mainBox = new VBox();
+        mainBox.setMaxWidth(250);
+        mainBox.setPadding(new Insets(5));
+        Color color = Color.FLORALWHITE;
+        mainBox.setBackground(new Background(new BackgroundFill(color,null,null)));
         
-        rentalLabel.setTextFill(Color.ANTIQUEWHITE);
-        Label parkingLabel = new Label("Total Parking Fees");
-
+  
+        Label label_1 = new Label("Car Rental");
+        GridPane.setConstraints(label_1, 0,0);
+        content.add(label_1);
         
-        parkingLabel.setFont(Font.font("Helvetica",FontWeight.NORMAL, FontPosture.REGULAR,29));
-        parkingLabel.setTextFill(Color.ANTIQUEWHITE);
-        labels.getChildren().addAll(cabLabel, personalLabel, rentalLabel, parkingLabel);
-
-       
-        VBox buttons = new VBox(15);
-        buttons.setPadding(new Insets(10));
-        buttons.setTranslateX(100);
-        buttons.setTranslateY(45);
-        Button addCabFare = new Button("Add Cab Fare");
-
+        TextField cost1 = new NumberTextField();
+        GridPane.setConstraints(cost1, 1,0);
+        content.add(cost1);
         
-
         
-        addCabFare.setOnAction(a->{
-
-        	
-        totalCabFare += (Double.parseDouble(cabfare.getText()));
-        cabLabel.setText("Total Cab Fares: " + totalCabFare);
-        cabfare.clear();
-        });
-
+        Label label_2 = new Label("Parking Fees");
+        GridPane.setConstraints(label_2, 0,1);
+        content.add(label_2);
         
-
+        TextField cost2 = new NumberTextField();
+        GridPane.setConstraints(cost2, 1,1);
+        content.add(cost2);
         
-         Button addPersonalMiles = new Button("Add Personal Miles");
-        addPersonalMiles.setOnAction(a->{
-
-        	
-        	totalPersonalMiles += (Double.parseDouble(personalMiles.getText()));
-        	personalLabel.setText("Total Personal Miles: " + totalPersonalMiles);
-        	personalMiles.clear();
-        });
-
+    
+        Label label_3 = new Label("Taxi Fees");
+        GridPane.setConstraints(label_3, 0,2);
+        content.add(label_3);
         
-        Button addRentalFees = new Button("Add Rental Fees");
-        addRentalFees.setOnAction(a->{
-
-        	
-        	totalRentalFees += (Double.parseDouble(rentalFees.getText()));
-        	rentalLabel.setText("Total Rental Fees: " + totalRentalFees);
-        	rentalFees.clear();
-        });
-
+        TextField cost3 = new NumberTextField();
+        GridPane.setConstraints(cost3, 1,2);
+        content.add(cost3);
+        //
+        Label label_4 = new Label("Miles Driven");
+        GridPane.setConstraints(label_4, 0,3);
+        content.add(label_4);
         
-        Button addParkingFees = new Button("Add Parking Fees");
-        addParkingFees.setOnAction(a->{
-
-        	
-        	totalParkingFees += (Double.parseDouble(parkingFees.getText()));
-        	parkingLabel.setText("Total Parking Fees: " + totalParkingFees);
-        	parkingFees.clear();
-        });
-
+        TextField cost4 = new NumberTextField();
+        GridPane.setConstraints(cost4, 1,3);
+        content.add(cost4);
         
-        buttons.getChildren().addAll(addCabFare, addPersonalMiles, addRentalFees, addParkingFees);
-
         
-
+        mainBox.setSpacing(10);
+        mainBox.getChildren().addAll(chargeGrid);
         
-
+        vb.getChildren().add(mainBox);
         
-        StackPane spScene5 = new StackPane(iv);
         spScene5.setBackground(Background.EMPTY);
-        spScene5.getChildren().addAll(vb,labels, buttons);
+        spScene5.getChildren().addAll(vb);
 
         
 
@@ -799,10 +766,10 @@ public class RobertDaronChuckGroupProject extends Application {
 
         
         backButton.setOnAction(a->{
-            totalCabFare = 0;
-            totalRentalFees = 0;
-            totalPersonalMiles = 0;
-            totalParkingFees = 0;
+            cabFees = 0;
+            this.rentalFees = 0;
+            milesDriven = 0;
+            this.parkingFees = 0;
             getAirfare();
         });
         
@@ -835,86 +802,58 @@ public class RobertDaronChuckGroupProject extends Application {
         //load image set to imageview
         Image picture = new Image("bellagiohotel800x400.png");
         ImageView iv = new ImageView(picture);
+        StackPane spScene5 = new StackPane(iv);
 
         
-        VBox vb = new VBox(15);
+        VBox vb = new VBox(40);
         vb.setPadding(new Insets(10));
 
-        
-        Text text = new Text("Please enter all of your Hotel and Seminar registration fees");
-        text.setFont(Font.font("Helvetica",FontWeight.NORMAL, FontPosture.REGULAR,29));
-        text.setFill(Color.BLACK);
-        NumberTextField hotelFee = new NumberTextField();  //made a new class to restrict the type of input (only positive integers)
-        hotelFee.setText("0.00");
-        hotelFee.setMaxWidth(100);
-        hotelFee.setPrefColumnCount(8);
-        NumberTextField seminarFee = new NumberTextField();  //made a new class to restrict the type of input (only positive integers)
-        seminarFee.setText("0.00");
-        seminarFee.setMaxWidth(100);
-        seminarFee.setPrefColumnCount(8);
-
+        Text prompt = new Text("Please enter all of your Hotel and Seminar registration fees");
+        prompt.setFont(Font.font("Helvetica",FontWeight.NORMAL, FontPosture.REGULAR,29));
+        prompt.setFill(Color.BLACK);
         
 
-        
-        vb.getChildren().addAll(text);
-        
-        Label hotelLabel = new Label("Total Hotel Fee: ");
-        hotelLabel.setTextFill(Color.BLACK);
-        hotelLabel.setFont(Font.font("Helvetica",FontWeight.EXTRA_BOLD, FontPosture.REGULAR,20));
-        hotelLabel.setEffect(ds);
-
-        
-
-       
-        Label seminarLabel = new Label("Total Seminar Fees: ");
-        seminarLabel.setFont(Font.font("Helvetica",FontWeight.EXTRA_BOLD, FontPosture.REGULAR,20));
-        seminarLabel.setTextFill(Color.BLACK);
-        seminarLabel.setEffect(ds);
-
+        vb.getChildren().addAll(prompt);
         
         
-        Button addHotelFee = new Button("Add Hotel Fee");
-        Button addSeminarFee = new Button("Add Seminar Registration Fee");
-
-        HBox hotelBox = new HBox();
-        hotelBox.setSpacing(10);
-        hotelBox.setPadding(new Insets(40));
-        hotelBox.getChildren().addAll(hotelFee,addHotelFee,hotelLabel);
+        //charge frame
+        GridPane chargeGrid = new GridPane();
+        chargeGrid.setHgap(15);
+        chargeGrid.setVgap(12);
+        ObservableList<Node> content = chargeGrid.getChildren();
         
-        HBox regFeeBox = new HBox();
-        regFeeBox = new HBox();
-        regFeeBox.setSpacing(10);
-        regFeeBox.setPadding(new Insets(40));
-        regFeeBox.getChildren().addAll(seminarFee,addSeminarFee,seminarLabel);
+        VBox mainBox = new VBox();
+        mainBox.setMaxWidth(250);
+        mainBox.setPadding(new Insets(5));
+        Color color = Color.FLORALWHITE;
+        mainBox.setBackground(new Background(new BackgroundFill(color,null,null)));
         
-        vb.getChildren().addAll(hotelBox,regFeeBox);
-
+  
+        Label label_1 = new Label("Hotel Fees");
+        GridPane.setConstraints(label_1, 0,0);
+        content.add(label_1);
         
-        addHotelFee.setOnAction(a->{
-
-        	
-        totalHotelFee += (Float.parseFloat(hotelFee.getText()));
-        hotelLabel.setText("Total Hotel Fee: " + totalHotelFee);
-        hotelFee.clear();
-        });
+        TextField cost1 = new NumberTextField();
+        GridPane.setConstraints(cost1, 1,0);
+        content.add(cost1);
         
-         
-        addSeminarFee.setOnAction(a->{
+        
+        Label label_2 = new Label("Seminar Fees");
+        GridPane.setConstraints(label_2, 0,1);
+        content.add(label_2);
+        
+        TextField cost2 = new NumberTextField();
+        GridPane.setConstraints(cost2, 1,1);
+        content.add(cost2);
 
-        	
-        	totalSeminarFee += (Float.parseFloat(seminarFee.getText()));
-        	seminarLabel.setText("Total Seminar Fees: " + totalSeminarFee);
-        	seminarFee.clear();
-        });
+        mainBox.setSpacing(10);
+        mainBox.getChildren().addAll(chargeGrid);
+        
+        vb.getChildren().add(mainBox);
 
-
-        StackPane spScene5 = new StackPane(iv);
         spScene5.setBackground(Background.EMPTY);
         spScene5.getChildren().addAll(vb);
 
-        
-
-       
         root.getChildren().addAll(spScene5,nextButton,backButton,exitButton);
 
         
@@ -932,8 +871,8 @@ public class RobertDaronChuckGroupProject extends Application {
 
         
         backButton.setOnAction(a->{
-        	totalHotelFee = 0;
-        	totalSeminarFee = 0;
+        	hotelFees = 0;
+        	regFees = 0;
                 getCarFees();
         });
     }
@@ -1057,7 +996,7 @@ public class RobertDaronChuckGroupProject extends Application {
                 if (cost3.getText().isEmpty())
                     dinnerArray.add(index.intValue(),0.00);
                 else
-                    dinnerArray.add(index.intValue(),Double.parseDouble(cost1.textProperty().getValueSafe()));
+                    dinnerArray.add(index.intValue(),Double.parseDouble(cost3.textProperty().getValueSafe()));
                 
                cost1.setText("0.0");
                cost2.setText("0.0");
@@ -1085,21 +1024,22 @@ public class RobertDaronChuckGroupProject extends Application {
                         breakfastArray.add(index.intValue(),0.00);
                     else
                         breakfastArray.add(index.intValue(),Double.parseDouble(cost1.textProperty().getValueSafe()));
+                    
                     if (cost2.getText().isEmpty())
                         lunchArray.add(index.intValue(),0.00);
                     else
                         lunchArray.add(index.intValue(),Double.parseDouble(cost2.textProperty().getValueSafe()));
+                    
                     if  (cost3.getText().isEmpty())
                         dinnerArray.add(index.intValue(),0.00);
                     else
-                        dinnerArray.add(index.intValue(),Double.parseDouble(cost1.textProperty().getValueSafe())); 
+                        dinnerArray.add(index.intValue(),Double.parseDouble(cost3.textProperty().getValueSafe())); 
 
                     //enable nextButton
                     nextButton.setDisable(false);
                     Image picture2 = new Image("flag800x400.png");
                     ImageView iv2 = new ImageView(picture2);
                     spScene7.getChildren().add(iv2);
-                    
 
                 }
                
@@ -1149,7 +1089,12 @@ public class RobertDaronChuckGroupProject extends Application {
         
         
         nextButton.setOnAction(a->{
-            writeToCommand();
+            try {
+                writeFile();
+                //showFile();
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(RobertDaronChuckGroupProject.class.getName()).log(Level.SEVERE, null, ex);
+            }
         });
         
         backButton.setOnAction(a->{
@@ -1279,50 +1224,247 @@ public class RobertDaronChuckGroupProject extends Application {
     }//end dateTimeValid
         
     
-    //temp method to test data
-    void writeToCommand()
+    //writes file
+    void writeFile() throws FileNotFoundException
     {
-        System.out.println("Name: " + name.getValueSafe());
-        System.out.println("Today Days of Trip: " + tripDays);
-        System.out.println("DepartDate/Time: " + departDT);
-        System.out.println("DepartTime: "+departTime.getConcatTime() + " Military Equiv: " + departTime.getMilitaryTime() );
-        System.out.println("ReturnDate/Time: " + returnDT);
-        System.out.println("ReturnTime: "+returnTime.getConcatTime() + " Military Equiv: " + returnTime.getMilitaryTime() );
-        System.out.println("Home Time: " + hTime);
-        System.out.println("Depart Meals breakfast, lunch, dinner: " + breakfastD_Day + lunchD_Day +dinnerD_Day);
-        System.out.println("Return Meals breakfast, lunch, dinner: " + breakfastR_Day + lunchR_Day +dinnerR_Day);
-        System.out.println("Cab Fees: "+totalCabFare);
-        System.out.println("Peronal Miles: "+totalPersonalMiles);
-        System.out.println("Rental Car: "+ totalRentalFees);
-        System.out.println("Parking cost: "+ totalParkingFees);
-        System.out.println("Airfare: " + valueAirfare);
-        System.out.println("Hotel costs: "+totalHotelFee);
-        System.out.println("Seminar costs: "+ totalSeminarFee);
-        System.out.println("DISPLAY THE ARRAYS BELOW");
-        System.out.println("Travel Dates Array");
-        for (int i = 0; i < travelDates.size(); i++)
-        {
-            System.out.println(travelDates.get(i).toString());
-        }
-        System.out.println("Note day zero is the index postion and represents depart day or day 1 of trip");
-        System.out.println("Breakfast Array");
+        //calculate total
+        double total = 0;
+        total  = cabFees;
+        total += rentalFees;
+        total += parkingFees;
+        total += airfareFee;
+        total += hotelFees;
+        total += regFees;
         for (int i = 0; i < breakfastArray.size(); i++)
         {
-            System.out.println("Day " + i + ": " + breakfastArray.get(i).toString());
+            total += breakfastArray.get(i);
+            total += lunchArray.get(i);
+            total += dinnerArray.get(i);
         }
         
-        System.out.println("Lunch Array");
-        for (int i = 0; i < lunchArray.size(); i++)
+        //add total to deductionsTotal
+        double deductionsTotal = total;
+        //Calc deductionsTotal
+        deductionsTotal -= airfareFee;
+        deductionsTotal -= rentalFees;
+        deductionsTotal -= regFees;
+        
+        if(((PARK*tripDays) - parkingFees) <= (PARK*tripDays))
+            deductionsTotal -= ((PARK*tripDays));
+        else
+            deductionsTotal -= ((PARK*tripDays) - parkingFees);
+            
+                
+        if(((HOTEL*tripDays) - hotelFees) <= (HOTEL*tripDays))
+            deductionsTotal -= (HOTEL*tripDays);
+        else
+            deductionsTotal -= ((HOTEL*tripDays) - hotelFees);
+            
+        if(((TAXI*tripDays) - cabFees) <= (TAXI*tripDays))
+            deductionsTotal -= (TAXI*tripDays);
+        else
+            deductionsTotal -= ((TAXI*tripDays) - cabFees);
+        
+        //add all breakfast lunches and dinners
+        for (int i = 0; i < breakfastArray.size(); i++)
         {
-            System.out.println("Day " + i + ": " + lunchArray.get(i).toString());
+            //breakfast
+            if ((breakfastArray.get(i) - B_FAST) > 0){
+//                System.out.println(true);
+//                System.out.println(deductionsTotal+" A");
+                deductionsTotal -= B_FAST;
+            }
+            else{
+//                System.out.println("elseTRUE");
+//                System.out.println(deductionsTotal+" B");
+                deductionsTotal -= breakfastArray.get(i);
+            }
+            //lunch
+            if ((lunchArray.get(i) - LUNCH) > 0){
+//                System.out.println(true);
+//                System.out.println(deductionsTotal+" C");
+                deductionsTotal -= LUNCH;
+            }
+            else{
+//                System.out.println("else"+true);
+//                System.out.println(deductionsTotal+" D");
+                deductionsTotal -= lunchArray.get(i);
+            }
+            //dinner
+            if ((dinnerArray.get(i) - DINNER) > 0){
+//                System.out.println(true);
+//                System.out.println(deductionsTotal+" E");
+                deductionsTotal -= DINNER;
+            }
+            else{
+//                System.out.println("else"+true);
+//                System.out.println(deductionsTotal+" F");
+                deductionsTotal -= dinnerArray.get(i);
+            }
+            
         }
         
-        System.out.println("Dinner Array");
-        for (int i = 0; i < dinnerArray.size(); i++)
+        //remove deductions for uncovered meals for Depart Day
+        //breakfast--------------------------------------------
+        if((!breakfastD_Day) && (breakfastArray.get(0) - B_FAST) > 0)
+            deductionsTotal += B_FAST;
+        else if((!breakfastD_Day) && (breakfastArray.get(0) - B_FAST <= 0))
+            deductionsTotal += breakfastArray.get(0);
+        //lunch-----------------------------------------------
+        if(!(lunchD_Day) && (lunchArray.get(0) - LUNCH) > 0)
+            deductionsTotal += LUNCH;
+        else if(!(lunchD_Day) && (lunchArray.get(0) - LUNCH <= 0))
+            deductionsTotal += lunchArray.get(0);
+        //dinner----------------------------------------------
+        if(!(dinnerD_Day) && (dinnerArray.get(0) - DINNER) > 0)
+            deductionsTotal += DINNER;
+        else if(!(dinnerD_Day) && (dinnerArray.get(0) - DINNER <= 0))
+            deductionsTotal += dinnerArray.get(0);
+        //------------------------------------------------------
+        //remove deductions for uncovered meals for Return Day
+        //breakfast--------------------------------------------
+        if(!(breakfastR_Day) && (breakfastArray.get(breakfastArray.size()-1) - B_FAST) > 0)
+            deductionsTotal += B_FAST;
+        else if(!(breakfastR_Day) && (breakfastArray.get(breakfastArray.size()-1) - B_FAST <= 0))
+            deductionsTotal += breakfastArray.get(breakfastArray.size()-1);
+        //lunch-----------------------------------------------
+        if(!(lunchR_Day) && (lunchArray.get(lunchArray.size()-1) - LUNCH) > 0)
+            deductionsTotal += LUNCH;
+        else if(!(lunchR_Day) && (lunchArray.get(lunchArray.size()-1) - LUNCH <= 0))
+            deductionsTotal += lunchArray.get(lunchArray.size()-1);
+        //dinner----------------------------------------------
+        if(!dinnerR_Day && (dinnerArray.get(breakfastArray.size()-1) - DINNER) > 0)
+            deductionsTotal += DINNER;
+        else if(!dinnerR_Day && (dinnerArray.get(breakfastArray.size()-1) - DINNER < 0))
+            deductionsTotal += dinnerArray.get(breakfastArray.size()-1);
+        //------------------------------------------------------
+        //calc total allowed expenses
+        double totalAllowed = 0;
+        totalAllowed += rentalFees;
+        totalAllowed += airfareFee;
+        totalAllowed += regFees;
+        totalAllowed += PARK*tripDays;
+        totalAllowed += TAXI*tripDays;
+        totalAllowed += HOTEL*tripDays;
+        totalAllowed += B_FAST*tripDays;
+        totalAllowed += LUNCH*tripDays;
+        totalAllowed += DINNER*tripDays;
+        
+        
+         
+
+        //createFileName
+        String fileName = name.getValueSafe();
+        fileName.concat("_ExpenseReport.txt");
+        //createFile
+        PrintWriter outFile = new PrintWriter(fileName);
+        //begin writing to file
+        outFile.println("-------------------------------------------------------");
+        outFile.println("Traveler Details---------------------------------------");
+        outFile.println("-------------------------------------------------------");
+        outFile.println("Traveler Name:      " + name.getValueSafe());
+        outFile.println("DepartDate/Time:    " + departDT);
+        outFile.println("ReturnDate/Time:    " + returnDT);
+        outFile.println("Home Time:          " + hTime);
+        outFile.println("Today Days of Trip: " + tripDays);
+        outFile.println("-------------------------------------------------------");
+        outFile.println("Expense Details----------------------------------------");
+        outFile.println("-------------------------------------------------------");
+        outFile.println("Airfare:         $" + airfareFee);
+        outFile.println("Cab Fees:        $" + cabFees);
+        outFile.println("Rental Car Fees: $" + rentalFees);
+        outFile.println("Parking Fees:    $" + parkingFees);
+        outFile.println("Hotel Fees:      $" + hotelFees);
+        outFile.println("Seminar Fees:    $" + regFees);
+        outFile.println("-------------------------------------------------------");
+        outFile.println("Meal Cost Breakdown------------------------------------");
+        outFile.println("-------------------------------------------------------");
+        for (int i = 0; i < breakfastArray.size(); i++)
         {
-            System.out.println("Day " + i + ": " +dinnerArray.get(i).toString());
+            outFile.println("Breakfast Day " + (i+1) + ": $" + breakfastArray.get(i).toString());
+            outFile.println("Lunch Day " + (i+1) + ": $" + lunchArray.get(i).toString());
+            outFile.println("Dinner Day " + (i+1) + ": $" + dinnerArray.get(i).toString());
         }
+        outFile.println("-------------------------------------------------------");
+        outFile.println("Total Expenses:     $" + total);
+        outFile.println("Total Allowable:    $" + totalAllowed);
+        if (deductionsTotal <= 0)
+        outFile.println("Employee Owes:      $0.00");
+        else
+        outFile.println("Employee Owes:      $" + deductionsTotal);
+        if (totalAllowed - total >0)
+        outFile.println("Employee Saved:     $" + (totalAllowed - total));
+        outFile.println("Miles Reimbursment: $" + (MILES*milesDriven));
+        outFile.close();
+        
+        showFile(fileName);
+        
+        
     }
 
+    void showFile(String fileName) throws FileNotFoundException
+    {
+        
+        Group root = new Group();
+        
+        HBox buttonBox = new HBox();
+        buttonBox.setSpacing(700);
+        Button saveClose = new Button("Save and Close");
+        Button exit = new Button("Close with out Saving");
+        buttonBox.getChildren().addAll(saveClose,exit);
+        
+        TextArea fileArea = new TextArea();
+        fileArea.setMinWidth(800);
+        fileArea.setMinHeight(400);
+        fileArea.setEditable(false);
+        
+        VBox mainBox = new VBox();
+        Color color = Color.CORNFLOWERBLUE;
+        mainBox.setBackground(new Background(new BackgroundFill(color,null,null)));
+        mainBox.setPadding(new Insets(20));
+        mainBox.setSpacing(20);
+        mainBox.getChildren().addAll(fileArea,buttonBox);
+        
+        
+        File file = new File(fileName);
+        Scanner inputFile = new Scanner(file);
+        String line = "";
+        while (inputFile.hasNext())
+        {
+            line = line.concat(inputFile.nextLine()+"\n");  
+            
+        }
+        fileArea.setText(line);
+        
+        
+        
+        root.getChildren().addAll(mainBox);
+        Scene display = new Scene(root);
+        manageStage(root,display);
+        pStage.setScene(display);
+        pStage.show();
+        
+        
+        
+        exit.setOnAction(a->{
+        	
+            boolean answer =  ConfirmBox.confirm("Exit the program?", " Are you sure you want "
+					+ "to exit the program? Your file will not be saved. ");
+            
+            if (answer == true){
+                
+                inputFile.close();
+                File deleteFile = new File(fileName);
+                deleteFile.delete();
+                pStage.close();
+            }
+        });
+        
+        saveClose.setOnAction(a->{
+                inputFile.close();
+                pStage.close();
+        });
+        
+    }
     
 }//end class
