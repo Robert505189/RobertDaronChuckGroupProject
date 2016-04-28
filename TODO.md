@@ -7,33 +7,38 @@ getName()
 ***
 getDateTime() Done -> Robert
 ***
-getAirFare() TODO: 
-will throw number format exception if empty (OTHER TODO item 1 will fix this issue)<strong>DONE -> Robert</strong>
+getAirFare() 
+ 
+1. will throw number format exception if empty (OTHER TODO item 1 will fix this issue)<strong>DONE -> Robert</strong>
 
-Regex contained in NumberTextField.java allows for multiple digits past decimal place ex "75.859999999"
+2. Regex contained in NumberTextField.java allows for multiple digits past decimal place ex "75.859999999"
 
-see OTHER TODO Item 1 <strong>DONE -> Robert</strong>
+3. see OTHER TODO Item 1 <strong>DONE -> Robert</strong>
 
-see OTHER TODO Item 2
+4. see OTHER TODO Item 2
+
+
 ***         
-getCarFees() TODO:
-change input to LABEL TEXT FIELD only REMOVE add Button we will only accept a total for the trip
+getCarFees()
+
+1. change input to LABEL TEXT FIELD only REMOVE add Button we will only accept a total for the trip
 place in grid pane use code between: //charge frame and //end charge frame in the getMeals()
 as a template to create charge frame grid, don't use the navbox portion for this method
 
-see OTHER TODO Item 1 <strong>DONE -> Robert</strong>
+2. see OTHER TODO Item 1 <strong>DONE -> Robert</strong>
 
-see OTHER TODO Item 2
+3. see OTHER TODO Item 2
               
 ***
-getHotelRegFees() TODO:
-change input to LABEL TEXT FIELD only REMOVE add Button we will only accept a total for the trip
+getHotelRegFees()
+
+1. change input to LABEL TEXT FIELD only REMOVE add Button we will only accept a total for the trip
 place in grid pane use code between: //charge frame and //end charge frame in the getMeals()
 as a template to create charge frame grid, don't use the navbox portion for this method
 
-see OTHER TODO Item 1 <strong>DONE -> Robert</strong>
+2. see OTHER TODO Item 1 <strong>DONE -> Robert</strong>
 
-see OTHER TODO Item 2
+3. see OTHER TODO Item 2
               
 ***
 getMeals()
