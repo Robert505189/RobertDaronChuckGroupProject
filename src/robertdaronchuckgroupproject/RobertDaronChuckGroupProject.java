@@ -623,7 +623,7 @@ public class RobertDaronChuckGroupProject extends Application {
         
         VBox vb = new VBox(40);
         vb.setPadding(new Insets(10));
-        Text prompt = new Text(" Enter any airfare incurred on you trip.");
+        Text prompt = new Text(" Enter any airfare incurred on your trip.");
         prompt.setFocusTraversable(true);
         prompt.requestFocus();
         prompt.setFont(Font.font("Helvetica",FontWeight.NORMAL, FontPosture.REGULAR,29));
