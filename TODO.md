@@ -8,5 +8,9 @@ so anything past that would be nit picking which there is no longer time for. Da
 
 ***
 ##HIGH PRIORITY
-3. Finish the word doc to document our project the program is done.
+Finish the word doc to document our project the program is done.
+***
+<strong>
+Also I will packedge everything up and compile outside of netbeans and load the files here.
+</strong>
 
