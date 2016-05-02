@@ -9,7 +9,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-public class AlertBox {
+public class RobertChuckDaronAlertBox {
 	
 	//making an alert box to assist with input validation
 	

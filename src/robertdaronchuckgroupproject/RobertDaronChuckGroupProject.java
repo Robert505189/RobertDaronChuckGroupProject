@@ -3,6 +3,7 @@ package robertdaronchuckgroupproject;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
+import java.math.BigDecimal;
 import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -36,6 +37,7 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextFormatter;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.effect.GaussianBlur;
 import javafx.scene.image.Image;
@@ -73,6 +75,8 @@ public class RobertDaronChuckGroupProject extends Application {
     public static void main(String[] args) {
         launch(args);
     }
+    
+        BigDecimal TEN;
         //Screen position references
         private double xPos;
         private double yPos;
@@ -314,7 +318,7 @@ public class RobertDaronChuckGroupProject extends Application {
         
         exitButton.setOnAction(a->{
         	
-            boolean answer =  ConfirmBox.confirm("Exit the program?", " Are you sure you want "
+            boolean answer =  RobertChuckDaronConfirmBox.confirm("Exit the program?", " Are you sure you want "
 					+ "to exit the program? Your progress will not be saved. ");
             if (answer == true)
                 pStage.close();
@@ -580,16 +584,17 @@ public class RobertDaronChuckGroupProject extends Application {
         
         nextButton.setOnAction(a ->{
         	
-        	if (!dateTimeValid(departDate,returnDate))
-                {
-                    AlertBox.alert("Error",
-                    "Be sure to enter a value in each field.\n"
-                  + "Return date and time must be after depart date and time.\n"
-                  + "Home time must be after return time.");
-        	}else
-                {
+                    if (!dateTimeValid(departDate,returnDate))
+                    {
+                        RobertChuckDaronAlertBox.alert("Error",
+                        "Be sure to enter a value in each field.\n"
+                        + "Return date and time must be after depart date and time.\n"
+                        + "Home time must be after return time.");
+                    }else
+                    {
                     getAirfare();
-                }
+                    }
+                
             
         });
         
@@ -627,21 +632,21 @@ public class RobertDaronChuckGroupProject extends Application {
         prompt.requestFocus();
         prompt.setFont(Font.font("Helvetica",FontWeight.NORMAL, FontPosture.REGULAR,29));
         
-        
-        
+
         vb.getChildren().addAll(prompt);
         
         spScene4.getChildren().addAll(vb);
         
         //airfare validation
-        TextField airfare = new NumberTextField();  
-        //made a new class to restrict the type of input (only positive integers
-        airfare.setPromptText("0.00");
+        //TextField airfare = new TextField();
+        RobertDaronChuckTextFormatter airfare = new RobertDaronChuckTextFormatter();
+        airfare.sethandlerDbl(airfare);
+        airfare.setEditable(false);
+        if (airfareFee != 0)
+            airfare.setText(String.valueOf(airfareFee));
         airfare.setMaxWidth(100);
         airfare.setPrefColumnCount(8);
         vb.getChildren().addAll(airfare);
-        
-        
         
         root.getChildren().addAll(spScene4,nextButton,backButton,exitButton);
         
@@ -652,7 +657,7 @@ public class RobertDaronChuckGroupProject extends Application {
         
         nextButton.setOnAction(a->{
             
-                if (airfare.getText().trim().length() == 0)
+                if (airfare.getText()== null)
                     airfareFee = 0.0;
                 else
                     airfareFee = Double.parseDouble(airfare.getText());
@@ -715,7 +720,11 @@ public class RobertDaronChuckGroupProject extends Application {
         GridPane.setConstraints(label_1, 0,0);
         content.add(label_1);
         
-        TextField cost1 = new NumberTextField();
+        RobertDaronChuckTextFormatter cost1 = new RobertDaronChuckTextFormatter(6);
+        cost1.sethandlerDbl(cost1);
+        cost1.setEditable(false);
+        if (rentalFees != 0)
+            cost1.setText(String.valueOf(rentalFees));
         GridPane.setConstraints(cost1, 1,0);
         content.add(cost1);
         
@@ -724,7 +733,11 @@ public class RobertDaronChuckGroupProject extends Application {
         GridPane.setConstraints(label_2, 0,1);
         content.add(label_2);
         
-        TextField cost2 = new NumberTextField();
+        RobertDaronChuckTextFormatter cost2 = new RobertDaronChuckTextFormatter(6);
+        cost2.sethandlerDbl(cost2);
+        cost2.setEditable(false);
+        if (parkingFees != 0)
+            cost2.setText(String.valueOf(parkingFees));
         GridPane.setConstraints(cost2, 1,1);
         content.add(cost2);
         
@@ -733,7 +746,11 @@ public class RobertDaronChuckGroupProject extends Application {
         GridPane.setConstraints(label_3, 0,2);
         content.add(label_3);
         
-        TextField cost3 = new NumberTextField();
+        RobertDaronChuckTextFormatter cost3 = new RobertDaronChuckTextFormatter(6);
+        cost3.sethandlerDbl(cost3);
+        cost3.setEditable(false);
+        if (cabFees != 0)
+            cost3.setText(String.valueOf(cabFees));
         GridPane.setConstraints(cost3, 1,2);
         content.add(cost3);
         //
@@ -741,7 +758,11 @@ public class RobertDaronChuckGroupProject extends Application {
         GridPane.setConstraints(label_4, 0,3);
         content.add(label_4);
         
-        TextField cost4 = new NumberTextField();
+        RobertDaronChuckTextFormatter cost4 = new RobertDaronChuckTextFormatter(4);
+        cost4.sethandlerInt(cost4);
+        cost4.setEditable(false);
+        if (milesDriven != 0)
+            cost4.setText(String.valueOf(milesDriven));
         GridPane.setConstraints(cost4, 1,3);
         content.add(cost4);
         
@@ -767,19 +788,19 @@ public class RobertDaronChuckGroupProject extends Application {
         
         nextButton.setOnAction(a->{
             
-            if(cost1.getText().trim().length() == 0)
+            if(cost1.getText() == null)
                 rentalFees = 0.0;
             else
                 rentalFees = Double.parseDouble(cost1.getText());
-            if (cost2.getText().trim().length() == 0)
+            if (cost2.getText() == null)
                 parkingFees = 0.0;
             else
                 parkingFees = Double.parseDouble(cost2.getText());
-            if (cost3.getText().trim().length() == 0)
+            if (cost3.getText() == null)
                 cabFees = 0.0;
             else
                 cabFees = Double.parseDouble(cost3.getText());
-            if (cost4.getText().trim().length() == 0)
+            if (cost4.getText() == null)
                 milesDriven = 0;
             else
                 milesDriven = Integer.parseInt(cost4.getText());
@@ -857,7 +878,11 @@ public class RobertDaronChuckGroupProject extends Application {
         GridPane.setConstraints(label_1, 0,0);
         content.add(label_1);
         
-        TextField cost1 = new NumberTextField();
+        RobertDaronChuckTextFormatter cost1 = new RobertDaronChuckTextFormatter(6);
+        cost1.sethandlerDbl(cost1);
+        cost1.setEditable(false);
+        if (hotelFees != 0)
+            cost1.setText(String.valueOf(hotelFees));
         GridPane.setConstraints(cost1, 1,0);
         content.add(cost1);
         
@@ -866,7 +891,11 @@ public class RobertDaronChuckGroupProject extends Application {
         GridPane.setConstraints(label_2, 0,1);
         content.add(label_2);
         
-        TextField cost2 = new NumberTextField();
+        RobertDaronChuckTextFormatter cost2 = new RobertDaronChuckTextFormatter(6);
+        cost2.sethandlerDbl(cost2);
+        cost2.setEditable(false);
+        if (regFees != 0)
+            cost2.setText(String.valueOf(regFees));
         GridPane.setConstraints(cost2, 1,1);
         content.add(cost2);
 
@@ -891,11 +920,11 @@ public class RobertDaronChuckGroupProject extends Application {
         
         nextButton.setOnAction(a->{
             
-            if (cost1.getText().trim().length() == 0)
+            if (cost1.getText() == null)
                 hotelFees = 0.0;
             else
                 hotelFees = Double.parseDouble(cost1.getText());
-            if (cost2.getText().trim().length() == 0)
+            if (cost2.getText() == null)
                 regFees = 0.0;
             else
                 regFees = Double.parseDouble(cost2.getText());
@@ -966,7 +995,9 @@ public class RobertDaronChuckGroupProject extends Application {
         GridPane.setConstraints(label_1, 0,0);
         content.add(label_1);
         
-        TextField cost1 = new NumberTextField();
+        RobertDaronChuckTextFormatter cost1 = new RobertDaronChuckTextFormatter(6,false);
+        cost1.sethandlerDbl(cost1);
+        cost1.setEditable(false);
         GridPane.setConstraints(cost1, 1,0);
         content.add(cost1);
         
@@ -975,7 +1006,9 @@ public class RobertDaronChuckGroupProject extends Application {
         GridPane.setConstraints(label_2, 0,1);
         content.add(label_2);
         
-        TextField cost2 = new NumberTextField();
+        RobertDaronChuckTextFormatter cost2 = new RobertDaronChuckTextFormatter(6,false);
+        cost2.sethandlerDbl(cost2);
+        cost2.setEditable(false);
         GridPane.setConstraints(cost2, 1,1);
         content.add(cost2);
         
@@ -984,7 +1017,9 @@ public class RobertDaronChuckGroupProject extends Application {
         GridPane.setConstraints(label_3, 0,2);
         content.add(label_3);
         
-        TextField cost3 = new NumberTextField();
+        RobertDaronChuckTextFormatter cost3 = new RobertDaronChuckTextFormatter(6,false);
+        cost3.sethandlerDbl(cost3);
+        cost3.setEditable(false);
         GridPane.setConstraints(cost3, 1,2);
         content.add(cost3);
         
@@ -1001,13 +1036,24 @@ public class RobertDaronChuckGroupProject extends Application {
         mainBox.getChildren().addAll(date,chargeGrid,navBox);
         
         //end charge frame
-        
-        //costs setTextfield values to 00.00
+
+        //costs setTextfield values to 0.00
         cost1.setPromptText("0.0");
         cost2.setPromptText("0.0");
         cost3.setPromptText("0.0");
         
         
+        //initialise meal array sizes and values if empty
+        //need only to check one array and only do once
+        if (breakfastArray.size() == 0){
+            for (int position = 0; position < travelDates.size(); position++)
+            {
+                breakfastArray.add(position, 0.0);
+                lunchArray.add(position, 0.0);
+                dinnerArray.add(position, 0.0);
+            }
+        }
+               
         //add values to the array
         nextDay.setOnAction(a->{
            //confirm boolean
@@ -1016,26 +1062,27 @@ public class RobertDaronChuckGroupProject extends Application {
            if(index.intValue() < travelDates.size()-1)
            {//do stuff first on nextDay
                 /*Safe to do stuff Here */
-                if (cost1.getText().isEmpty())
-                    breakfastArray.add(index.intValue(),0.00);
+                if (cost1.getText() == null)
+                    breakfastArray.set(index.intValue(),0.00);
                 else
-                   breakfastArray.add(index.intValue(),Double.parseDouble(cost1.textProperty().getValueSafe()));
+                   breakfastArray.set(index.intValue(),Double.parseDouble(cost1.textProperty().getValueSafe()));
                 
-                if(cost2.getText().isEmpty())
-                    lunchArray.add(index.intValue(),0.00);
+                if(cost2.getText() == null)
+                    lunchArray.set(index.intValue(),0.00);
                 else
-                    lunchArray.add(index.intValue(),Double.parseDouble(cost2.textProperty().getValueSafe()));
+                    lunchArray.set(index.intValue(),Double.parseDouble(cost2.textProperty().getValueSafe()));
                 
-                if (cost3.getText().isEmpty())
-                    dinnerArray.add(index.intValue(),0.00);
+                if (cost3.getText() == null)
+                    dinnerArray.set(index.intValue(),0.00);
                 else
-                    dinnerArray.add(index.intValue(),Double.parseDouble(cost3.textProperty().getValueSafe()));
+                    dinnerArray.set(index.intValue(),Double.parseDouble(cost3.textProperty().getValueSafe()));
                 
-               cost1.setText("0.0");
-               cost2.setText("0.0");
-               cost3.setText("0.0");
-               
-               
+                //set the text to next array value
+                cost1.setText(String.valueOf(breakfastArray.get(index.intValue()+1)));
+                cost2.setText(String.valueOf(lunchArray.get(index.intValue()+1)));
+                cost3.setText(String.valueOf(dinnerArray.get(index.intValue()+1)));
+
+
                 /*Stop doing stuff Here */
                 /*   Then Increment     */   
                 index.set((index.intValue() + 1));
@@ -1045,28 +1092,27 @@ public class RobertDaronChuckGroupProject extends Application {
                 {
                     nextDay.setText("Confirm");
                 }
-                
+
            }
            else
            {
-            
-                answer =  ConfirmBox.confirm("Meals","Are you done entering your meal costs?");
+                answer =  RobertChuckDaronConfirmBox.confirm("Meals","Are you done entering your meal costs?");
                 if (answer)
                 {
-                    if (cost1.getText().isEmpty())
-                        breakfastArray.add(index.intValue(),0.00);
+                    if (cost1.getText() == null)
+                        breakfastArray.set(index.intValue(),0.00);
                     else
-                        breakfastArray.add(index.intValue(),Double.parseDouble(cost1.textProperty().getValueSafe()));
+                        breakfastArray.set(index.intValue(),Double.parseDouble(cost1.textProperty().getValueSafe()));
                     
-                    if (cost2.getText().isEmpty())
-                        lunchArray.add(index.intValue(),0.00);
+                    if (cost2.getText() == null)
+                        lunchArray.set(index.intValue(),0.00);
                     else
-                        lunchArray.add(index.intValue(),Double.parseDouble(cost2.textProperty().getValueSafe()));
+                        lunchArray.set(index.intValue(),Double.parseDouble(cost2.textProperty().getValueSafe()));
                     
-                    if  (cost3.getText().isEmpty())
-                        dinnerArray.add(index.intValue(),0.00);
+                    if  (cost3.getText() == null)
+                        dinnerArray.set(index.intValue(),0.00);
                     else
-                        dinnerArray.add(index.intValue(),Double.parseDouble(cost3.textProperty().getValueSafe())); 
+                        dinnerArray.set(index.intValue(),Double.parseDouble(cost3.textProperty().getValueSafe())); 
 
                     //enable nextButton
                     nextButton.setDisable(false);
@@ -1084,7 +1130,24 @@ public class RobertDaronChuckGroupProject extends Application {
         backDay.setOnAction(a->{
            //check bounds are safe before doing stuff
            if (index.intValue() != 0)
-           {//decrement first on backDay
+           {//decrement first on backDay unless
+                //last day of trip go ahead and store values before going back
+                //so user does not have to re-enter values while traversing the array
+                if (index.intValue() == travelDates.size() -1)
+                {
+                    if (cost1.getText() == null)
+                        breakfastArray.set(index.intValue(),0.00);
+                    else
+                        breakfastArray.set(index.intValue(),Double.parseDouble(cost1.textProperty().getValueSafe()));
+                    if(cost2.getText() == null)
+                        lunchArray.set(index.intValue(),0.00);
+                    else
+                        lunchArray.set(index.intValue(),Double.parseDouble(cost2.textProperty().getValueSafe()));
+                    if (cost3.getText() == null)
+                        dinnerArray.set(index.intValue(),0.00);
+                    else
+                     dinnerArray.set(index.intValue(),Double.parseDouble(cost3.textProperty().getValueSafe())); 
+                }
                /*   Then decrement     */
                 index.set((index.intValue() - 1));
                 date.setText(travelDates.get(index.intValue()).toString());
@@ -1092,13 +1155,14 @@ public class RobertDaronChuckGroupProject extends Application {
                 cost1.setText(String.valueOf(breakfastArray.get(index.intValue())));
                 cost2.setText(String.valueOf(lunchArray.get(index.intValue())));
                 cost3.setText(String.valueOf(dinnerArray.get(index.intValue())));
+
                 //set/revert next day button
                 nextDay.setText("Next Day");
                
                /*Stop doing stuff Here */
            }
            else
-               AlertBox.alert("Hey","This is the first day of your trip!");
+               RobertChuckDaronAlertBox.alert("Hey","This is the first day of your trip!");
    
         });
         
@@ -1164,11 +1228,12 @@ public class RobertDaronChuckGroupProject extends Application {
             valid = false;
         else{
             dDate = departD.getValue();
-            rDate = returnD.getValue();  
+            rDate = returnD.getValue();
+            valid = true;
         }
         
         //check use inputed times by using Methods in the class RobertChuckDarTimeSelector.java class
-        if (departTime.IsTimeReady()&&returnTime.IsTimeReady()&&returnHomeTime.IsTimeReady())
+        if (departTime.IsTimeReady()&&returnTime.IsTimeReady()&&returnHomeTime.IsTimeReady() && valid)
         {
             dTime = departTime.getMilitaryTime();
             rTime = returnTime.getMilitaryTime();
@@ -1481,7 +1546,7 @@ public class RobertDaronChuckGroupProject extends Application {
         
         exit.setOnAction(a->{
         	
-            boolean answer =  ConfirmBox.confirm("Exit the program?", " Are you sure you want "
+            boolean answer =  RobertChuckDaronConfirmBox.confirm("Exit the program?", " Are you sure you want "
 					+ "to exit the program? Your file will not be saved. ");
             
             if (answer == true){

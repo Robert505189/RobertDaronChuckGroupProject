@@ -9,7 +9,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-public class ConfirmBox {
+public class RobertChuckDaronConfirmBox {
 	
 	//confirmation box to ensure the user wants to do what they said they want to do
 	
