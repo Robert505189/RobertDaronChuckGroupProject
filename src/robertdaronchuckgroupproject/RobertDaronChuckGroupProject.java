@@ -3,7 +3,6 @@ package robertdaronchuckgroupproject;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
-import java.math.BigDecimal;
 import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -36,8 +35,6 @@ import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
-import javafx.scene.control.TextFormatter;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.effect.GaussianBlur;
 import javafx.scene.image.Image;
@@ -76,7 +73,6 @@ public class RobertDaronChuckGroupProject extends Application {
         launch(args);
     }
     
-        BigDecimal TEN;
         //Screen position references
         private double xPos;
         private double yPos;
