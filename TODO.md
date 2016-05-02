@@ -8,5 +8,5 @@ so anything past that would be nit picking which there is no longer time for. Da
 
 ***
 ##HIGH PRIORITY
-3. Start the word doc to document our project the program is complete enough pseudo can be started
+3. Finish the word doc to document our project the program is done.
 
