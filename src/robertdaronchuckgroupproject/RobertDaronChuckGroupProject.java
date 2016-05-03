@@ -957,7 +957,7 @@ public class RobertDaronChuckGroupProject extends Application {
         
         VBox outerVB = new VBox(40);
         outerVB.setPadding(new Insets(10));
-        Text prompt = new Text(" Enter meal costs incurred on you trip.");
+        Text prompt = new Text(" Enter meal costs incurred on your trip.");
         prompt.setFont(Font.font("Helvetica",FontWeight.BOLD, FontPosture.REGULAR,29));
         prompt.setFill(Color.BLACK);
         
